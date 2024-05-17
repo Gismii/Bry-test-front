@@ -1,6 +1,6 @@
 
 
-```markdown
+
 # Gerenciador de Cadastro de Usuários
 
 Este projeto é uma aplicação frontend criada com React, TypeScript e Material-UI, utilizando Vite como ferramenta de build.
