@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Box, Button, TextField, Typography } from '@mui/material';
-import { User } from '../interfaces/types';
-import { updateUser } from '../services/api';
+import { Box, Button, TextField, Modal } from '@mui/material';
+import { User } from '../interfaces/types';  
 
-interface EditUserModalProps {
+interface EditUserFormProps {
   open: boolean;
-  onClose: () => void;
+  handleClose: () => void;
   user: User | null;
-  fetchUsers: () => Promise<void>;
+  updateUser: (id: number, formData: FormData) => void;
 }
 
-const EditUserModal: React.FC<EditUserModalProps> = ({ open, onClose, user, fetchUsers }) => {
+const EditUserForm: React.FC<EditUserFormProps> = ({ open, handleClose, user, updateUser }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [image, setImage] = useState<File | null>(null);
@@ -19,10 +18,12 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ open, onClose, user, fetc
     if (user) {
       setFirstName(user.firstName);
       setLastName(user.lastName);
+      setImage(null);
     }
   }, [user]);
 
-  const handleUpdate = async () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (user) {
       const formData = new FormData();
       formData.append('firstName', firstName);
@@ -30,26 +31,16 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ open, onClose, user, fetc
       if (image) {
         formData.append('image', image);
       }
-
-      try {
-        await updateUser(user.id, formData);
-        fetchUsers();
-        onClose();
-      } catch (error) {
-        console.error('Failed to update user:', error);
-      }
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
+      updateUser(user.id, formData);
+      handleClose();
     }
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={handleClose}>
       <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
           position: 'absolute',
           top: '50%',
@@ -60,33 +51,39 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ open, onClose, user, fetc
           boxShadow: 24,
         }}
       >
-        <Typography variant="h6" gutterBottom>
-          Edit User
-        </Typography>
         <TextField
-          fullWidth
           label="First Name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          fullWidth
           margin="normal"
         />
         <TextField
-          fullWidth
           label="Last Name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          fullWidth
           margin="normal"
         />
-        <input type="file" onChange={handleFileChange} />
-        <Button variant="contained" color="primary" onClick={handleUpdate} style={{ marginTop: '10px' }}>
-          Update
+        <Button
+          variant="contained"
+          component="label"
+          fullWidth
+          sx={{ margin: 'normal' }}
+        >
+          Upload Image
+          <input
+            type="file"
+            hidden
+            onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
+          />
         </Button>
-        <Button variant="contained" onClick={onClose} style={{ marginLeft: '10px', marginTop: '10px' }}>
-          Cancel
+        <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          Save
         </Button>
       </Box>
     </Modal>
   );
 };
 
-export default EditUserModal;
+export default EditUserForm;

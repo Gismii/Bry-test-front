@@ -55,6 +55,7 @@ const UserForm: React.FC<UserFormProps> = ({ addUser }) => {
         accept="image/*"
         onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
       />
+      <br /><br />
       <Button type="submit" variant="contained" color="primary">
         Add User
       </Button>

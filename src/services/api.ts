@@ -11,7 +11,7 @@ export const createUser = (formData: FormData) => api.post('/users', formData, {
   },
 });
 export const deleteUser = (id: number) => api.delete(`/users/${id}`);
-export const updateUser = (id: number, formData: FormData) => api.put(`/users/${id}`, formData, {
+export const updateUser = (id: number, formData: FormData) => api.put(`/users/edit/${id}`, formData, {
   headers: {
     'Content-Type': 'multipart/form-data',
   },
