@@ -20,7 +20,7 @@ Para rodar este projeto localmente, certifique-se de ter o Node.js instalado na 
 1. Clone o repositório:
 
    ```bash
-   git clone <URL_DO_SEU_REPOSITORIO>
+   git clone <git@github.com:Gismii/Bry-test-front.git>
    cd nomedoapp
    ```
 
@@ -75,5 +75,5 @@ public/
 - TypeScript (superset JavaScript para tipagem estática)
 - Material-UI (biblioteca de componentes React baseados no Material Design)
 - Vite (bundler para projetos frontend modernos)
-```
+
 
