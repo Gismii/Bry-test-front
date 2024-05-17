@@ -11,6 +11,8 @@ Este projeto é uma aplicação frontend criada com React, TypeScript e Material
 - Listagem de usuários cadastrados
 - Exclusão de usuários existentes
 
+![gismi](https://github.com/Gismii/Bry-test-front/assets/97984496/91149fe3-f059-4a7a-9619-7c48516ada13)
+
 ### Pré-requisitos
 
 Para rodar este projeto localmente, certifique-se de ter o Node.js instalado na sua máquina.
